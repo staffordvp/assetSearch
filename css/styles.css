@@ -1,0 +1,99 @@
+#HeadStyle
+	{
+	background-color: #999;
+	border-radius: 5px;
+	margin: 5px;
+	padding: 5px;
+	float:right
+	}
+	
+	#ResultsBox
+	{
+		max-height:500px;
+		width:300px;
+		overflow:auto;	
+	}
+	/*
+	::-webkit-scrollbar {
+      width: 11px;
+	} /* this targets the default scrollbar (compulsory) */
+	
+	::-webkit-scrollbar-track {
+      background-color:#666;
+	} /* the new scrollbar will have a flat appearance with the set background color */
+	 
+	::-webkit-scrollbar-thumb {
+		  background-color: #CCC;
+	} /* this will style the thumb, ignoring the track */
+	 
+	::-webkit-scrollbar-button {
+		  background-color:#333;
+	} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+	 
+	::-webkit-scrollbar-corner {
+		  background-color: black;
+	} /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+	
+	
+	.ResultObject
+	{
+		background-color: #CCC;
+		margin:3px;
+		padding:3px;
+		border-radius: 3px;
+		
+		-moz-user-select: -moz-none;
+	   -khtml-user-select: none;
+	   -webkit-user-select: none;
+	
+	   /*
+		 Introduced in IE 10.
+		 See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+	   */
+	   -ms-user-select: none;
+	   user-select: none;
+	}
+	
+	.DataObject
+	{
+		
+		margin:3px;
+		padding:3px;
+		border-radius: 3px;
+		
+	
+	}
+	
+	.ResultObject:hover		
+	{
+		background-color: #DDD;
+		padding-left:8px;
+	}
+	
+	.NameObject
+	{
+		background-color: #CCC;
+		margin:5px;
+		padding:5px;
+	}
+	
+	.ValueObject
+	{
+		background-color: #CCC;
+		margin:5px;
+		padding:5px;
+	}
+	
+	
+	#DataDisplay
+	{
+		position:absolute;
+		right:0;
+		bottom:0;
+		
+		
+		background-color: #999;
+		border-radius: 5px;
+		margin: 5px;
+		padding: 5px;
+	}

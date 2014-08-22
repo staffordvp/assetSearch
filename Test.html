@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+
+<body>
+
+<div id="HeadStyle">
+	Search: <input type="text" id="searchString" onchange="searchPressed();"/><input type="button" value="Search" onclick="searchPressed();"/>
+    
+    <div id="ResultsBox">
+    </div>
+    
+</div>
+
+<div id="DataDisplay">
+	Test Stuff
+</div>
+
+</body>
+
+<script>
+
+	// ---- Radiant UI Script ----
+		
+	RadiantUI.SetCallback("UpdateResults", function(newResults)
+	{
+		var container = document.getElementById("ResultsBox");
+		container.innerHTML = "";
+		for(var i = 0; i < newResults.length; i++)
+		{
+			container.appendChild(createResultObject(newResults[i]));
+		}
+		
+	});
+	
+	function fillList(inNames, inValues)
+	{
+		if(inNames.length != inValues.length)
+		{
+			return;	
+		}
+		
+		var longestString = 0;
+		
+		for(var i = 0;i < inNames.length; i++)
+		{
+			if(inNames[i].length > longestString)
+			{
+				longestString = inNames[i].length;	
+			}
+		}
+		
+		
+		var container = document.getElementById("DataDisplay");
+		container.innerHTML = "";
+		for(var i = 0; i < inNames.length; i++)
+		{
+			container.appendChild(createDataObject(inNames[i],inValues[i],longestString));
+		}
+		
+		var allNames = document.getElementsByClassName("NameObject");
+	}
+	
+	
+	RadiantUI.SetCallback("SetData", function(inNames,inValues)
+	{
+		
+		if(inNames.length != inValues.length)
+		{
+			return;	
+		}
+		
+		var longestString = 0;
+		
+		for(var i = 0;i < inNames.length; i++)
+		{
+			if(inNames[i].length > longestString)
+			{
+				longestString = inNames[i].length;	
+			}
+		}
+		
+		
+		var container = document.getElementById("DataDisplay");
+		container.innerHTML = "";
+		for(var i = 0; i < inNames.length; i++)
+		{
+			container.appendChild(createDataObject(inNames[i],inValues[i],longestString));
+		}
+		
+		var allNames = document.getElementsByClassName("NameObject");
+		
+	});
+	
+	function createDataObject(inName,inValue,nameLength)
+	{
+		var element = document.createElement("DIV");	
+		element.className = "DataObject";
+		var keySpan = document.createElement("SPAN");
+		keySpan.textContent = inName;
+		keySpan.className = "NameObject";
+		var lengthString = nameLength * 40.5;
+		
+		var valueSpan = document.createElement("SPAN");
+		valueSpan.textContent = inValue;
+		valueSpan.className = "ValueObject";
+		
+		keySpan.style.width = lengthString.toString()+"px";
+		
+		element.appendChild(keySpan);
+		element.appendChild(valueSpan);
+		//keySpan.setAttribute("style","width:"+lengthString.toString()+"px");
+		
+		return element;
+	}
+	
+	function createResultObject(inString)
+	{
+		var element = document.createElement("DIV");	
+		element.className = "ResultObject";
+		element.onclick = function()
+		{
+			RadiantUI.TriggerEvent("ResultClicked",[inString]);
+		}
+		element.innerHTML = inString;
+		return element;
+	}
+	
+	function searchPressed()
+	{
+		var sobj = document.getElementById("searchString");
+		
+		RadiantUI.TriggerEvent("searchObjectsPressed",[sobj.value]);
+	}
+	
+
+	function CallText(inText)
+	{
+		RadiantUI.TriggerEvent("menuClicked",[inText]);	
+	}
+</script>
+
+</html>
