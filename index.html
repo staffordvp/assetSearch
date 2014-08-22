@@ -3,38 +3,71 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
+<script src="js/jquery-2.1.1.min.js"></script>
 </head>
 
 <body>
 
-<div id="HeadStyle">
-	Search: <input type="text" id="searchString" onchange="searchPressed();"/><input type="button" value="Search" onclick="searchPressed();"/>
-    
-    <div id="ResultsBox">
+<div id="searchBox">
+	<form role="form">
+		<div class="form-group">
+			<!-- <label>Asset Search</label> -->
+			<div class="input-group input-group-sm">
+				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+				<input type="text" class="form-control" id="searchString" onchange="searchPressed();"/ placeholder="search for assets..."><div class="input-group-btn">
+					<button class="btn btn-default" type="button" onclick="retractResults();">
+						<span id="arrow" class="glyphicon glyphicon glyphicon-resize-small"></span>
+					</button>
+				</div>
+		    </div><!--
+			<label>Search: </label>
+			<input type="text" class="form-control" id="searchString" onchange="searchPressed();"/ placeholder="type here...">
+			<input type="button" class="btn btn-default" value="Search" onclick="searchPressed();"/> -->
+		</div>
+    </form>
+    <div id="resultsBox" class="list-group">
     </div>
     
 </div>
 
-<div id="DataDisplay">
+<div id="dataDisplay">
 	Test Stuff
 </div>
 
 </body>
+<script type="text/javascript" src="js/radiantui-null.js"></script>
 
 <script>
+
+function retractResults(){
+	
+	$('#resultsBox').slideToggle();	
+	$('#arrow').toggleClass("glyphicon-resize-small")
+	$('#arrow').toggleClass("glyphicon-resize-full")
+}
+
+	function radiantUpdateDecoy (newResults) {
+		var container = document.getElementById("resultsBox");
+		container.innerHTML = "";
+
+		for(var i = 0; i < newResults.length; i++)
+		{
+			container.appendChild(createResultObject(newResults[i]));
+		}
+	}
 
 	// ---- Radiant UI Script ----
 		
 	RadiantUI.SetCallback("UpdateResults", function(newResults)
 	{
-		var container = document.getElementById("ResultsBox");
+		var container = document.getElementById("resultsBox");
 		container.innerHTML = "";
 		for(var i = 0; i < newResults.length; i++)
 		{
 			container.appendChild(createResultObject(newResults[i]));
 		}
-		
 	});
 	
 	function fillList(inNames, inValues)
@@ -55,7 +88,7 @@
 		}
 		
 		
-		var container = document.getElementById("DataDisplay");
+		var container = document.getElementById("dataDisplay");
 		container.innerHTML = "";
 		for(var i = 0; i < inNames.length; i++)
 		{
@@ -85,7 +118,7 @@
 		}
 		
 		
-		var container = document.getElementById("DataDisplay");
+		var container = document.getElementById("dataDisplay");
 		container.innerHTML = "";
 		for(var i = 0; i < inNames.length; i++)
 		{
@@ -98,14 +131,14 @@
 	
 	function createDataObject(inName,inValue,nameLength)
 	{
-		var element = document.createElement("DIV");	
+		var element = document.createElement("div");	
 		element.className = "DataObject";
-		var keySpan = document.createElement("SPAN");
+		var keySpan = document.createElement("span");
 		keySpan.textContent = inName;
 		keySpan.className = "NameObject";
 		var lengthString = nameLength * 40.5;
 		
-		var valueSpan = document.createElement("SPAN");
+		var valueSpan = document.createElement("span");
 		valueSpan.textContent = inValue;
 		valueSpan.className = "ValueObject";
 		
@@ -120,10 +153,12 @@
 	
 	function createResultObject(inString)
 	{
-		var element = document.createElement("DIV");	
-		element.className = "ResultObject";
+		var element = document.createElement("div");	
+		element.className = "list-group-item";
 		element.onclick = function()
 		{
+			//alert(inString);
+			retractResults();
 			RadiantUI.TriggerEvent("ResultClicked",[inString]);
 		}
 		element.innerHTML = inString;
@@ -142,6 +177,9 @@
 	{
 		RadiantUI.TriggerEvent("menuClicked",[inText]);	
 	}
+
+	testData = ["One", "Two", "Three", "Four", "Two"];
+	radiantUpdateDecoy(testData);
 </script>
 
 </html>
