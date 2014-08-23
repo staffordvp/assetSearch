@@ -13,18 +13,18 @@
 <div id="searchBox">
 	<form role="form">
 		<div class="form-group">
-			<!-- <label>Asset Search</label> -->
-			<div class="input-group input-group-sm">
-				<div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-				<input type="text" class="form-control" id="searchString" onchange="searchPressed();"/ placeholder="search for assets..."><div class="input-group-btn">
+			<label>ineni Realtime</label>
+			<div class="input-group group-size">
+				<div class="input-group-addon">
+					<span class="glyphicon glyphicon-search"></span>
+				</div>
+				<input type="text" class="form-control" id="searchString" onchange="searchPressed();"/ placeholder="search assets...">
+				<div class="input-group-btn">
 					<button class="btn btn-default" type="button" onclick="retractResults();">
-						<span id="arrow" class="glyphicon glyphicon glyphicon-resize-small"></span>
+						<span id="arrow" class="glyphicon glyphicon-resize-small"></span>
 					</button>
 				</div>
-		    </div><!--
-			<label>Search: </label>
-			<input type="text" class="form-control" id="searchString" onchange="searchPressed();"/ placeholder="type here...">
-			<input type="button" class="btn btn-default" value="Search" onclick="searchPressed();"/> -->
+		    </div>
 		</div>
     </form>
     <div id="resultsBox" class="list-group"></div>
@@ -40,12 +40,11 @@
 
 <script>
 
-function retractResults(){
-	
-	$('#resultsBox').slideToggle();	
-	$('#arrow').toggleClass("glyphicon-resize-small")
-	$('#arrow').toggleClass("glyphicon-resize-full")
-}
+	function retractResults(){
+		$('#resultsBox').slideToggle();	
+		$('#arrow').toggleClass("glyphicon-resize-small")
+		$('#arrow').toggleClass("glyphicon-resize-full")
+	}
 
 	function radiantUpdateDecoy (newResults) {
 		var container = document.getElementById("resultsBox");
@@ -157,7 +156,7 @@ function retractResults(){
 		element.onclick = function()
 		{
 			//alert(inString);
-			retractResults();
+			//retractResults();
 			RadiantUI.TriggerEvent("ResultClicked",[inString]);
 		}
 		element.innerHTML = inString;

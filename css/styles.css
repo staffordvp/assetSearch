@@ -25,7 +25,7 @@
 	padding: 5px;
 }
 
-/*
+
 ::-webkit-scrollbar {
   width: 11px;
 } /* this targets the default scrollbar (compulsory) */
@@ -46,15 +46,18 @@
 	  background-color: black;
 } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
 
-/* label {
-	//font-size: 1rem;
-	color: white;
-	float: left;
-	text-align: right;
-	margin-right: 15px;
-	width: 100px;
-	text-shadow: black 1px 1px 1px;
-}	*/
+label {
+    color: rgba(255,255,255,1);
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.glyphicon {
+	font-size: 16px;	
+}
+
+.group-size {
+	height: 34px;
+}
 
 .list-group-item {
 	padding: 3px 15px;
@@ -112,9 +115,14 @@
 }
 
 
-html body {
+html {
 	height: 100%;
 	margin:0;
-	background: tomato;
+	//background: tomato;
 	//background:none;
+    background-image: url(../img/background.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
