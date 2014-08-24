@@ -113,37 +113,7 @@
 			container.appendChild(createResultObject(newResults[i]));
 		}
 	});
-	/*
-	function fillList(inNames, inValues)
-	{
-		if(inNames.length != inValues.length)
-		{
-			return;	
-		}
-		
-		var longestString = 0;
-		
-		for(var i = 0;i < inNames.length; i++)
-		{
-			if(inNames[i].length > longestString)
-			{
-				longestString = inNames[i].length;	
-			}
-		}
-		
-		
-		var container = document.getElementById("dataDisplayBody");
-		container.innerHTML = "";
-		for(var i = 0; i < inNames.length; i++)
-		{
-
-		}
-		
-		var allNames = document.getElementsByClassName("NameObject");
-	}
 	
-	*/
-    
 	RadiantUI.SetCallback("SetData", function(inNames,inValues,inTitle)
 	{
 		if(!inTitle) {
