@@ -20,7 +20,7 @@
 				</div>
 				<input type="text" class="form-control" id="searchString" onchange="searchPressed();"/ placeholder="search assets...">
 				<div class="input-group-btn">
-					<button class="btn btn-default" type="button" onclick="retractResults();">
+					<button class="btn btn-default" class="enableOnInput" type="button" onclick="retractResults();">
 						<span id="arrow" class="glyphicon glyphicon-resize-small"></span>
 					</button>
 				</div>
@@ -31,26 +31,17 @@
     
 </div>
     <div id="dataDisplayDiv">
-        <span id="dataDisplayRemove" class="glyphicon glyphicon-remove" onclick="$('#dataDisplayDiv').slideToggle('fast');"></span>
+        <span id="dataDisplayRemove" class="glyphicon glyphicon-remove" onclick="$('#dataDisplayDiv').fadeOut('fast');"></span>
         <div id="dataDisplay" class="list-group">
         </div>
     </div>
-
-<!--
-    <div id="breadcrumbDiv">
-        <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active">Data</li>
-        </ol>
-    </div>
--->    
 
 </body>
 <script type="text/javascript" src="js/radiantui-null.js"></script>
 
 <script>
 
+    // function to simply slide up or down the results, only happens when the resize button is clicked
 	function retractResults(){
 		$('#resultsBox').slideToggle('fast');	
 		$('#arrow').toggleClass("glyphicon-resize-small")
@@ -58,7 +49,7 @@
 	}
     
     
-
+    // Decoy for the updateResults RadiantUI function
 	function updateResultsRadiantDecoy (newResults) {
 		var container = document.getElementById("resultsBox");
 		container.innerHTML = "";
@@ -94,16 +85,19 @@
         
         for(var i = 0; i < inNames.length; i++)
 		{
-			createDataObject(inNames[i],inValues[i],longestString);
+            var namePlusValue = "<strong>" + inNames[i] + "</strong> - " + inValues[i];
+            jQuery('<div/>',{
+                id: inNames[i],
+                'class': 'list-group-item',
+                html: namePlusValue,
+            }).appendTo('#dataDisplay');
 		}
 		
 		var allNames = document.getElementsByClassName("NameObject");
         
-        $("#dataDisplayDiv").show();
+        $("#dataDisplayDiv").fadeIn('fast');
         
     }
-
-    
     
     
 // ---- Radiant UI Script ----
@@ -113,12 +107,13 @@
 	{
 		var container = document.getElementById("resultsBox");
 		container.innerHTML = "";
+
 		for(var i = 0; i < newResults.length; i++)
 		{
 			container.appendChild(createResultObject(newResults[i]));
 		}
 	});
-	
+	/*
 	function fillList(inNames, inValues)
 	{
 		if(inNames.length != inValues.length)
@@ -141,16 +136,21 @@
 		container.innerHTML = "";
 		for(var i = 0; i < inNames.length; i++)
 		{
-			createDataObject(container,inNames[i],inValues[i],longestString);
+
 		}
 		
 		var allNames = document.getElementsByClassName("NameObject");
 	}
 	
-	
-	RadiantUI.SetCallback("SetData", function(inNames,inValues)
+	*/
+    
+	RadiantUI.SetCallback("SetData", function(inNames,inValues,inTitle)
 	{
-		
+		if(!inTitle) {
+            inTitle = "The title goes here";
+        }
+        
+        
 		if(inNames.length != inValues.length)
 		{
 			return;	
@@ -169,52 +169,28 @@
 		
 		var container = document.getElementById("dataDisplay");
 		container.innerHTML = "";
-		for(var i = 0; i < inNames.length; i++)
+        
+        
+        for(var i = 0; i < inNames.length; i++)
 		{
-			container.appendChild(createDataObject(inNames[i],inValues[i],longestString));
+			createDataObject(inNames[i],inValues[i],longestString);
 		}
 		
-		var allNames = document.getElementsByClassName("NameObject");
+		//var allNames = document.getElementsByClassName("NameObject");
+        
+        $("#dataDisplayDiv").show();
 		
 	});
-	
-	function createDataObject(inName,inValue,nameLength)
+    
+    function createDataObject(inName,inValue,nameLength)
 	{
-		console.log(inName);
         var namePlusValue = "<strong>" + inName + "</strong> - " + inValue;
-        console.log(namePlusValue);
-        
         jQuery('<div/>',{
             id: inName,
             'class': 'list-group-item',
             html: namePlusValue,
         }).appendTo('#dataDisplay');
-        
-        /*
-        jQuery('<span/>',{
-            html: inValue,
-        }).appendTo('#dataDisplay');
-        
-        /*
-        var element = document.createElement("dl");	
-		element.className = "dl-horizontal";
-		var keySpan = document.createElement("dt");
-		keySpan.textContent = inName;
-		keySpan.className = "";
-		var lengthString = nameLength * 40.5;
-		
-		var valueSpan = document.createElement("dd");
-		valueSpan.textContent = inValue;
-		valueSpan.className = "";
-		
-		keySpan.style.width = lengthString.toString()+"px";
-		
-		inContainer.appendChild(keySpan);
-		inContainer.appendChild(valueSpan);
-		//keySpan.setAttribute("style","width:"+lengthString.toString()+"px");
-		
-		//return element; */
-	}
+    }
 	
 	function createResultObject(inString)
 	{
@@ -237,6 +213,7 @@
 		var sobj = document.getElementById("searchString");
 		
 		RadiantUI.TriggerEvent("searchObjectsPressed",[sobj.value]);
+        
 	}
 	
 	function CallText(inText)
@@ -244,9 +221,9 @@
 		RadiantUI.TriggerEvent("menuClicked",[inText]);	
 	}
     
-	testNames = ["One", "Two", "Three", "Four", "Etiam porta sem malesuada magna mollis euismod."];
-    testValues = [1, 2, 3, 4, 5];
-	updateResultsRadiantDecoy(testNames);
+	//testNames = ["One", "Two", "Three", "Four", "Etiam porta sem malesuada magna mollis euismod."];
+    //testValues = [1, 2, 3, 4, 5];
+	//updateResultsRadiantDecoy(testNames);
     $("#dataDisplayDiv").hide();
 </script>
 
