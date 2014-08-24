@@ -11,20 +11,33 @@
 #resultsBox
 {
 	max-height:500px;
-	overflow:auto;	
 }
 
-#dataDisplay
+#resultsBox > div {
+         overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;   
+}
+
+#dataDisplayDiv
 {
 	position:absolute;
 	right:0;
 	bottom:0;
-	background-color: #999;
+	//background-color: #79b5d2;
 	border-radius: 3px;
-	margin: 5px;
-	padding: 5px;
+	//margin: 5px;
+	padding: 15px;
+    max-width: 300px;
+    overflow: hidden;
+    //display: none;
 }
 
+dt {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 ::-webkit-scrollbar {
   width: 11px;
@@ -89,9 +102,10 @@ label {
 
 .DataObject
 {
-	margin:3px;
+	/* margin:3px;
 	padding:3px;
-	border-radius: 3px;
+	border-radius: 3px; */
+    
 }
 
 .ResultObject:hover		
@@ -102,18 +116,22 @@ label {
 
 .NameObject
 {
-	background-color: #CCC;
+	/* background-color: #CCC;
 	margin:5px;
-	padding:5px;
+	padding:5px; */
 }
 
 .ValueObject
 {
-	background-color: #CCC;
+	/* background-color: #CCC;
 	margin:5px;
-	padding:5px;
+	padding:5px; */
+    text-align: left;
 }
 
+.dl-horizontal dt {
+    //text-align: left;
+}
 
 html {
 	height: 100%;
@@ -125,4 +143,8 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+body {
+
 }

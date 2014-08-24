@@ -30,10 +30,21 @@
     <div id="resultsBox" class="list-group"></div>
     
 </div>
+    <div id="dataDisplayDiv">
+        <span id="dataDisplayRemove" class="glyphicon glyphicon-remove" onclick="$('#dataDisplayDiv').slideToggle('fast');"></span>
+        <div id="dataDisplay" class="list-group">
+        </div>
+    </div>
 
-<div id="dataDisplay">
-	Test Stuff
-</div>
+<!--
+    <div id="breadcrumbDiv">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active">Data</li>
+        </ol>
+    </div>
+-->    
 
 </body>
 <script type="text/javascript" src="js/radiantui-null.js"></script>
@@ -41,12 +52,14 @@
 <script>
 
 	function retractResults(){
-		$('#resultsBox').slideToggle();	
+		$('#resultsBox').slideToggle('fast');	
 		$('#arrow').toggleClass("glyphicon-resize-small")
 		$('#arrow').toggleClass("glyphicon-resize-full")
 	}
+    
+    
 
-	function radiantUpdateDecoy (newResults) {
+	function updateResultsRadiantDecoy (newResults) {
 		var container = document.getElementById("resultsBox");
 		container.innerHTML = "";
 
@@ -55,9 +68,47 @@
 			container.appendChild(createResultObject(newResults[i]));
 		}
 	}
-
-	// ---- Radiant UI Script ----
+    
+    function testDataRadiantDecoy (inNames, inValues) {
+        
+        if(inNames.length != inValues.length)
+		{
+			return;	
+		}
 		
+		var longestString = 0;
+		
+		for(var i = 0;i < inNames.length; i++)
+		{
+			if(inNames[i].length > longestString)
+			{
+				longestString = inNames[i].length;	
+			}
+		}
+		
+		
+		var container = document.getElementById("dataDisplay");
+		container.innerHTML = "";
+		
+        
+        
+        for(var i = 0; i < inNames.length; i++)
+		{
+			createDataObject(inNames[i],inValues[i],longestString);
+		}
+		
+		var allNames = document.getElementsByClassName("NameObject");
+        
+        $("#dataDisplayDiv").show();
+        
+    }
+
+    
+    
+    
+// ---- Radiant UI Script ----
+
+    
 	RadiantUI.SetCallback("UpdateResults", function(newResults)
 	{
 		var container = document.getElementById("resultsBox");
@@ -86,11 +137,11 @@
 		}
 		
 		
-		var container = document.getElementById("dataDisplay");
+		var container = document.getElementById("dataDisplayBody");
 		container.innerHTML = "";
 		for(var i = 0; i < inNames.length; i++)
 		{
-			container.appendChild(createDataObject(inNames[i],inValues[i],longestString));
+			createDataObject(container,inNames[i],inValues[i],longestString);
 		}
 		
 		var allNames = document.getElementsByClassName("NameObject");
@@ -129,24 +180,40 @@
 	
 	function createDataObject(inName,inValue,nameLength)
 	{
-		var element = document.createElement("div");	
-		element.className = "DataObject";
-		var keySpan = document.createElement("span");
+		console.log(inName);
+        var namePlusValue = "<strong>" + inName + "</strong> - " + inValue;
+        console.log(namePlusValue);
+        
+        jQuery('<div/>',{
+            id: inName,
+            'class': 'list-group-item',
+            html: namePlusValue,
+        }).appendTo('#dataDisplay');
+        
+        /*
+        jQuery('<span/>',{
+            html: inValue,
+        }).appendTo('#dataDisplay');
+        
+        /*
+        var element = document.createElement("dl");	
+		element.className = "dl-horizontal";
+		var keySpan = document.createElement("dt");
 		keySpan.textContent = inName;
-		keySpan.className = "NameObject";
+		keySpan.className = "";
 		var lengthString = nameLength * 40.5;
 		
-		var valueSpan = document.createElement("span");
+		var valueSpan = document.createElement("dd");
 		valueSpan.textContent = inValue;
-		valueSpan.className = "ValueObject";
+		valueSpan.className = "";
 		
 		keySpan.style.width = lengthString.toString()+"px";
 		
-		element.appendChild(keySpan);
-		element.appendChild(valueSpan);
+		inContainer.appendChild(keySpan);
+		inContainer.appendChild(valueSpan);
 		//keySpan.setAttribute("style","width:"+lengthString.toString()+"px");
 		
-		return element;
+		//return element; */
 	}
 	
 	function createResultObject(inString)
@@ -157,8 +224,10 @@
 		{
 			//alert(inString);
 			//retractResults();
+            testDataRadiantDecoy(testNames,testValues);
 			RadiantUI.TriggerEvent("ResultClicked",[inString]);
 		}
+        
 		element.innerHTML = inString;
 		return element;
 	}
@@ -170,14 +239,15 @@
 		RadiantUI.TriggerEvent("searchObjectsPressed",[sobj.value]);
 	}
 	
-
 	function CallText(inText)
 	{
 		RadiantUI.TriggerEvent("menuClicked",[inText]);	
 	}
-
-	testData = ["One", "Two", "Three", "Four", "Two"];
-	radiantUpdateDecoy(testData);
+    
+	testNames = ["One", "Two", "Three", "Four", "Etiam porta sem malesuada magna mollis euismod."];
+    testValues = [1, 2, 3, 4, 5];
+	updateResultsRadiantDecoy(testNames);
+    $("#dataDisplayDiv").hide();
 </script>
 
 </html>
