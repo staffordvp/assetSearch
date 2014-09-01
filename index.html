@@ -168,11 +168,13 @@
 		element.className = "list-group-item";
 		element.onclick = function()
 		{
-			//alert(inString);
-			//retractResults();
-            testDataRadiantDecoy(testNames,testValues);
+            //testDataRadiantDecoy(testNames,testValues);
 			RadiantUI.TriggerEvent("ResultClicked",[inString]);
 		}
+        element.ondblclick = function()
+        {
+            RadiantUI.TriggerEvent("ResultDoubleClicked",[inString]);
+        }
         
 		element.innerHTML = inString;
 		return element;

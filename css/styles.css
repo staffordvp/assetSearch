@@ -137,14 +137,17 @@ html {
 	height: 100%;
 	margin:0;
 	//background: tomato;
-	//background:none;
-    background-image: url(../img/background.jpg);
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+	background:none;
+    //background-image: url(../img/background.jpg);
+    //-webkit-background-size: cover;
+    //-moz-background-size: cover;
+    //-o-background-size: cover;
+    //background-size: cover;
 }
 
 body {
-
+    backface-visibility: hidden;
+    background:none;
+    background-color:transparent;
 }
+
